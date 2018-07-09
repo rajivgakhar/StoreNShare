@@ -104,6 +104,7 @@ public class MyFunction {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError response) {
+                Toast.makeText(context,response.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
         // Adding request to request queue

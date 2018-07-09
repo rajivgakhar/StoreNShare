@@ -31,7 +31,7 @@ public class LogAdapter extends RecyclerView.Adapter <LogAdapter.ViewHolder> {
     public void onBindViewHolder(LogAdapter.ViewHolder holder, int position) {
         UserLog listItem=listItems.get(position);
 
-        holder.txtLogMessage.setText(listItem.getMessage()+"-"+listItem.getDate());
+        holder.txtLogMessage.setText(listItem.getMessage()+" at "+listItem.getDate());
     }
 
     @Override

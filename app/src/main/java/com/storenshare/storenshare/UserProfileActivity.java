@@ -264,8 +264,9 @@ public class UserProfileActivity extends AppCompatActivity
 
                                                 //  Toast.makeText(UserProfileActivity.this, jobj.getString("name")+"bgxx", Toast.LENGTH_SHORT).show();
 
-
                                             } // for loop ends
+                                            MyFunction mf1 = new MyFunction();
+                                            mf1.addLog(UserProfileActivity.this, userId, "You uploaded " + fileName);
 
                                         } else {
 
@@ -360,8 +361,8 @@ public class UserProfileActivity extends AppCompatActivity
         });
 
 //-------------------------------------------------------
-        txtFileUpload=(TextView)findViewById(R.id.txtFileUploading);
-        pbFileUp=(ProgressBar)findViewById(R.id.pbFileUpload);
+        txtFileUpload = (TextView) findViewById(R.id.txtFileUploading);
+        pbFileUp = (ProgressBar) findViewById(R.id.pbFileUpload);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -415,7 +416,7 @@ public class UserProfileActivity extends AppCompatActivity
 
                             JSONObject jobj1 = ja1.getJSONObject(i);
 
-                            ListItem listItem = new ListItem(jobj1.getString("filename"),jobj1.getString("id"),jobj1.getString("userid"));
+                            ListItem listItem = new ListItem(jobj1.getString("filename"), jobj1.getString("id"), jobj1.getString("userid"));
                             listItems.add(listItem);
                         } // for loop ends
 
@@ -464,7 +465,6 @@ public class UserProfileActivity extends AppCompatActivity
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -491,23 +491,26 @@ public class UserProfileActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if(mDrawerLayout.isDrawerOpen(GravityCompat.START))
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
             closeDrawer();
         else
             super.onBackPressed();
     }
-    private void closeDrawer(){
+
+    private void closeDrawer() {
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
-    private void setupToolbarMenu(){
-        mToolbar=(Toolbar)findViewById(R.id.toolbar);
+
+    private void setupToolbarMenu() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("Home");
     }
-    private void setupNavigationDrawerMenu(){
-        NavigationView navigationView=(NavigationView)findViewById(R.id.navigationView);
-        mDrawerLayout=(DrawerLayout)findViewById(R.id.drawerLayout);
-        ActionBarDrawerToggle drawerToggle=new ActionBarDrawerToggle(this,
-                mDrawerLayout,mToolbar,
+
+    private void setupNavigationDrawerMenu() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this,
+                mDrawerLayout, mToolbar,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(drawerToggle);
@@ -518,6 +521,7 @@ public class UserProfileActivity extends AppCompatActivity
         name = headerLayout.findViewById(R.id.userName);
         email = headerLayout.findViewById(R.id.userEmail);
     }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -526,9 +530,9 @@ public class UserProfileActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-            startActivity(new Intent(UserProfileActivity.this,CreateDocsActivity.class));
+            startActivity(new Intent(UserProfileActivity.this, CreateDocsActivity.class));
         } else if (id == R.id.nav_slideshow) {
-            startActivity(new Intent(UserProfileActivity.this,SharedWithMeActivity.class));
+            startActivity(new Intent(UserProfileActivity.this, SharedWithMeActivity.class));
         } else if (id == R.id.nav_manage) {
             startActivity(new Intent(UserProfileActivity.this, EditProfile.class));
         } else if (id == R.id.view_log) {

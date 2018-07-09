@@ -79,7 +79,7 @@ public class ShareFileActivity extends AppCompatActivity implements NavigationVi
 
     public void shareFileWithMember(View view) {
         String emailID = member.getText().toString().trim();
-        MyFunction mf = new MyFunction();
+        final MyFunction mf = new MyFunction();
         String permission="view";
         if(rbView.isChecked()){
             permission="view";
@@ -105,6 +105,8 @@ public class ShareFileActivity extends AppCompatActivity implements NavigationVi
                             Intent in=new Intent(ShareFileActivity.this, ShareFileActivity.class);
                             in.putExtra("contentId",contentId);
                             startActivity(in);
+                            mf.addLog(ShareFileActivity.this, userId, "You shared a file ");
+
                             finish();
                            
                             Toast.makeText(getApplicationContext(),

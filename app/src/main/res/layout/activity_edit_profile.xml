@@ -32,19 +32,12 @@
     tools:context="com.storenshare.storenshare.EditProfile">
 
     <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="20dp"
-        android:text="Edit your profile" />
-
-    <TextView
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:layout_marginTop="15dp"
         android:text="Email"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -85,7 +78,10 @@
         android:id="@+id/btnUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update" />
+        android:background="@color/colorPrimary"
+        android:text="Update"
+        android:textColor="@color/textColorPrimary"
+        android:textStyle="bold" />
 
 </LinearLayout>
     </LinearLayout>

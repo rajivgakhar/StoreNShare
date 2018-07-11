@@ -55,8 +55,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Sign UP"
+        android:background="@color/colorPrimary"
         android:onClick="signUp"
+        android:text="Sign UP"
+        android:textColor="@color/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGoogle" />
@@ -85,10 +87,10 @@
             android:id="@+id/signIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/signIn"
             android:onClick="openLoginActivity"
-            android:textColor="#00f"
-            android:textStyle="italic" />
+            android:text="@string/signIn"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold|italic" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
     </LinearLayout>

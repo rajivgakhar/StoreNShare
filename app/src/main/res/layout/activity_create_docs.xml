@@ -43,8 +43,11 @@
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:onClick="saveFile"
-        android:text="Save" />
+        android:text="Save"
+        android:textColor="@color/textColorPrimary"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etEditor"

@@ -61,9 +61,12 @@
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
-        android:onClick="signUp"
         android:layout_height="wrap_content"
-        android:text="Signup" />
+        android:background="@color/colorPrimary"
+        android:onClick="signUp"
+        android:text="Signup"
+        android:textColor="@color/textColorPrimary"
+        android:textStyle="bold" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
@@ -78,9 +81,9 @@
             android:id="@+id/signIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/signIn"
             android:onClick="openLoginActivity"
-            android:textColor="#00f"
-            android:textStyle="italic" />
+            android:text="@string/signIn"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold|italic" />
     </LinearLayout>
 </LinearLayout>

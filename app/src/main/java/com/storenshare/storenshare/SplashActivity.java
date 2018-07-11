@@ -23,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
 
         final ProgressBar splashProgreeBar=(ProgressBar)findViewById(R.id.splashProgressBar);
         splashProgreeBar.getProgressDrawable().setColorFilter(
-                Color.BLUE, android.graphics.PorterDuff.Mode.SRC_IN);
+                Color.argb(255,56,159,120), android.graphics.PorterDuff.Mode.SRC_IN);
         splashProgreeBar.setMax(100);
 
         new Thread(new Runnable() {

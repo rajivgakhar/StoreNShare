@@ -525,35 +525,8 @@ public class UserProfileActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-            startActivity(new Intent(UserProfileActivity.this, CreateDocsActivity.class));
-        } else if (id == R.id.nav_slideshow) {
-            startActivity(new Intent(UserProfileActivity.this, SharedWithMeActivity.class));
-        } else if (id == R.id.nav_manage) {
-            startActivity(new Intent(UserProfileActivity.this, EditProfile.class));
-        } else if (id == R.id.view_log) {
-            startActivity(new Intent(UserProfileActivity.this, LogActivity.class));
-        } else if (id == R.id.nav_send) {
-            mGoogleSignInClient.signOut()
-                    .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            // ...
-                            SharedPreferences sharedpreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedpreferences.edit();
-                            editor.remove("userID");
-                            editor.commit();
-
-                            Toast.makeText(UserProfileActivity.this, "Signout Success", Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(UserProfileActivity.this, HomeActivity.class));
-
-                        }
-                    });
-        }
+        MyFunction mf=new MyFunction();
+        mf.navigationActions(getApplicationContext(),item,mGoogleSignInClient);
         closeDrawer();
         return true;
     }

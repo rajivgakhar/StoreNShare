@@ -1,16 +1,24 @@
 package com.storenshare.storenshare;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -110,5 +118,42 @@ public class MyFunction {
         // Adding request to request queue
         MyApplication.getInstance().addToReqQueue(user_request);
 
+    }
+
+    public void navigationActions(final Context context, MenuItem item, GoogleSignInClient mGoogleSignInClient){
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+            context.startActivity(new Intent(context,CreateDocsActivity.class));
+        } else if (id == R.id.nav_slideshow) {
+            context.startActivity(new Intent(context,SharedWithMeActivity.class));
+        } else if (id == R.id.nav_manage) {
+            context.startActivity(new Intent(context, EditProfile.class));
+        } else if (id == R.id.nav_share) {
+
+        }
+        else if (id == R.id.view_log) {
+            context.startActivity(new Intent(context, LogActivity.class));
+        }
+        else if (id == R.id.nav_send) {
+            mGoogleSignInClient.signOut()
+                    .addOnCompleteListener((Executor) this, new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            // ...
+
+                            SharedPreferences sharedpreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                            editor.remove("userID");
+                            editor.commit();
+
+                            Toast.makeText(context, "Signout Success", Toast.LENGTH_LONG).show();
+                            context.startActivity(new Intent(context, HomeActivity.class));
+
+                        }
+                    });
+        }
     }
 }

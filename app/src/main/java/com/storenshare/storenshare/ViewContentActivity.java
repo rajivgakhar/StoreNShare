@@ -57,12 +57,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class ViewContentActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
-ImageView ivContent;
-String contentId,contentUrl,contentName,ownerID, loginUserId,permission;
-Button del,inShare,openEditor;
+public class ViewContentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    ImageView ivContent;
+    String contentId, contentUrl, contentName, ownerID, loginUserId, permission;
+    Button del, inShare, openEditor;
 
-final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
+    final String filePath = "http://shareblood.x10host.com/storeshare/uploads/";
     final String url = "http://shareblood.x10host.com/storeshare/deleteContent.php";
     final String dataUrlById = "http://shareblood.x10host.com/storeshare/getDataById.php";
     final String dataUrl = "http://shareblood.x10host.com/storeshare/getData.php";
@@ -74,6 +74,7 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     TextView name, email;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,17 +88,17 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        ivContent=(ImageView)findViewById(R.id.ivContent);
-        del=(Button)findViewById(R.id.btnDel);
-        inShare=(Button)findViewById(R.id.btnInShare);
-        openEditor=(Button)findViewById(R.id.btnView);
+        ivContent = (ImageView) findViewById(R.id.ivContent);
+        del = (Button) findViewById(R.id.btnDel);
+        inShare = (Button) findViewById(R.id.btnInShare);
+        openEditor = (Button) findViewById(R.id.btnView);
 
-        Intent in=getIntent();
-        contentId=in.getStringExtra("contentId");
+        Intent in = getIntent();
+        contentId = in.getStringExtra("contentId");
         SharedPreferences sharedpreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         loginUserId = sharedpreferences.getString("userID", "1");
 
-       //get content from data table
+        //get content from data table
         Map<String, String> params = new HashMap<String, String>();
         params.put("id", contentId);
         CustomRequest user_request1 = new CustomRequest(Request.Method.POST, dataUrlById, params, new Response.Listener<JSONObject>() {
@@ -114,14 +115,13 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
                         for (int i = 0; i < ja.length(); i++) {
 
                             JSONObject jobj = ja.getJSONObject(i);
-                            ownerID=jobj.getString("userid");
-                            contentName=jobj.getString("filename");
-                            //permission=jobj.getString("permission");
+                            ownerID = jobj.getString("userid");
+                            contentName = jobj.getString("filename");
 
                         } // for loop ends
-                        contentUrl=filePath+contentName;
+                        contentUrl = filePath + contentName;
                         String[] parts = contentName.split("\\.");
-                        if(!(parts.length>1))
+                        if (!(parts.length > 1))
                             openEditor.setVisibility(View.VISIBLE);
 
                         mToolbar.setTitle(contentName);
@@ -131,9 +131,8 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
                                 .error(R.drawable.file)
                                 .transform(transformation)
                                 .into(ivContent);
-                            //if data owner if different from login user
-                        if(!loginUserId.equals(ownerID))
-                        {
+                        //if data owner if different from login user
+                        if (!loginUserId.equals(ownerID)) {
 //get content from data table
                             Map<String, String> params1 = new HashMap<String, String>();
                             params1.put("id", contentId);
@@ -150,27 +149,20 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
                                             for (int i = 0; i < ja.length(); i++) {
 
                                                 JSONObject jobj = ja.getJSONObject(i);
-                                                permission=jobj.getString("permission");
+                                                permission = jobj.getString("permission");
 
                                             } // for loop ends
-                                                if(permission.equals("view")) {
-                                                    del.setVisibility(View.GONE);
-                                                    inShare.setVisibility(View.GONE);
-                                                }else{
-                                                    del.setVisibility(View.VISIBLE);
-                                                    inShare.setVisibility(View.GONE);
-                                                }
+                                            if (permission.equals("view")) {
+                                                del.setVisibility(View.GONE);
+                                                inShare.setVisibility(View.GONE);
+                                            } else {
+                                                del.setVisibility(View.VISIBLE);
+                                                inShare.setVisibility(View.GONE);
+                                            }
 
-                                        } else {
-
-                                            Toast.makeText(getApplicationContext(),
-                                                    "Invalid id", Toast.LENGTH_SHORT)
-                                                    .show();
                                         }
                                     } catch (Exception e) {
-                                        Toast.makeText(getApplicationContext(),
-                                                e.getMessage(), Toast.LENGTH_SHORT)
-                                                .show();
+
                                     }
 
                                 }
@@ -178,27 +170,19 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
 
                                 @Override
                                 public void onErrorResponse(VolleyError response) {
-                                    Log.e("testttttttt1",response.getMessage());
                                 }
                             });
-
 
                             // Adding request to request queue
                             MyApplication.getInstance().addToReqQueue(user_request2);
                             //get content from data table END
                         }
 
-                    } else {
-
-                        Toast.makeText(getApplicationContext(),
-                                "Invalid id", Toast.LENGTH_SHORT)
-                                .show();
                     }
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(),
                             e.getMessage(), Toast.LENGTH_SHORT)
                             .show();
-                    Log.e("testttttttt",e.getMessage());
                 }
 
             }
@@ -209,7 +193,6 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
 
             }
         });
-
 
         // Adding request to request queue
         MyApplication.getInstance().addToReqQueue(user_request1);
@@ -227,6 +210,7 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
         }
 
     }
+
     Transformation transformation = new Transformation() {
 
         @Override
@@ -248,6 +232,7 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
             return "transformation" + " desiredWidth";
         }
     };
+
     public void deleteFile(View view) {
         new AlertDialog.Builder(this)
                 .setTitle("Action")
@@ -257,40 +242,38 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
 
                     public void onClick(DialogInterface dialog, int whichButton) {
 
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("id", contentId);
+                        params.put("url", "uploads/" + contentName);
+                        CustomRequest user_request = new CustomRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    int success = response.getInt("success");
+                                    if (success == 1) {
+                                        Toast.makeText(getApplicationContext(),
+                                                response.getString("message") + "", Toast.LENGTH_LONG)
+                                                .show();
+                                        startActivity(new Intent(ViewContentActivity.this, UserProfileActivity.class));
+                                    } else {
 
-
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("id",contentId );
-        params.put("url","uploads/"+contentName );
-        CustomRequest user_request = new CustomRequest(Request.Method.POST, url, params, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    int success = response.getInt("success");
-                    if (success == 1) {
-                        Toast.makeText(getApplicationContext(),
-                                response.getString("message")+"", Toast.LENGTH_LONG)
-                                .show();
-                        startActivity(new Intent(ViewContentActivity.this,UserProfileActivity.class));
-                    } else {
-
-                        Toast.makeText(getApplicationContext(),
-                                response.getString("message")+"", Toast.LENGTH_LONG)
-                                .show();
+                                        Toast.makeText(getApplicationContext(),
+                                                response.getString("message") + "", Toast.LENGTH_LONG)
+                                                .show();
+                                    }
+                                } catch (Exception e) {
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError response) {
+                            }
+                        });
+                        // Adding request to request queue
+                        MyApplication.getInstance().addToReqQueue(user_request);
                     }
-                } catch (Exception e) {
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError response) {
-            }
-        });
-        // Adding request to request queue
-        MyApplication.getInstance().addToReqQueue(user_request);
-                    }})
+                })
                 .setNegativeButton(android.R.string.no, null).show();
-
 
     }
 
@@ -303,38 +286,40 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
     }
 
     public void shareFileWithMember(View view) {
-        Intent in=new Intent(ViewContentActivity.this, ShareFileActivity.class);
-        in.putExtra("contentId",contentId);
-        in.putExtra("contentUrl",contentUrl);
-       startActivity(in);
-    }
-
-    public void openEditor(View view) {
-        Intent in=new Intent(ViewContentActivity.this, CreateDocsActivity.class);
-        in.putExtra("contentId",contentId);
-        in.putExtra("contentUrl",contentUrl);
-        in.putExtra("contentFileName",contentName);
+        Intent in = new Intent(ViewContentActivity.this, ShareFileActivity.class);
+        in.putExtra("contentId", contentId);
+        in.putExtra("contentUrl", contentUrl);
         startActivity(in);
     }
 
-    private class DownLoadImageTask extends AsyncTask<String,Void,Bitmap> {
+    public void openEditor(View view) {
+        Intent in = new Intent(ViewContentActivity.this, CreateDocsActivity.class);
+        in.putExtra("contentId", contentId);
+        in.putExtra("contentUrl", contentUrl);
+        in.putExtra("contentFileName", contentName);
+        startActivity(in);
+    }
+
+    private class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView imageView;
 
-        public DownLoadImageTask(ImageView imageView){
+        public DownLoadImageTask(ImageView imageView) {
             this.imageView = imageView;
         }
-        protected Bitmap doInBackground(String...urls){
+
+        protected Bitmap doInBackground(String... urls) {
             String urlOfImage = urls[0];
             Bitmap logo = null;
-            try{
+            try {
                 InputStream is = new URL(urlOfImage).openStream();
                 logo = BitmapFactory.decodeStream(is);
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return logo;
         }
-        protected void onPostExecute(Bitmap result){
+
+        protected void onPostExecute(Bitmap result) {
 
             imageView.setImageBitmap(result);
         }
@@ -356,11 +341,12 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
                 return null;
         }
     }
+
     class DownloadFileFromURL extends AsyncTask<String, String, String> {
 
         /**
          * Before starting background thread Show Progress Bar Dialog
-         * */
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -369,7 +355,7 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
 
         /**
          * Downloading file in background thread
-         * */
+         */
         @Override
         protected String doInBackground(String... f_url) {
             int count;
@@ -386,14 +372,14 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
                 InputStream input = new BufferedInputStream(url.openStream(),
                         8192);
 
-                 File newDir = new File(Environment.getExternalStorageDirectory().toString()+ "/storeNshare/");
-                if(!newDir.isDirectory())
+                File newDir = new File(Environment.getExternalStorageDirectory().toString() + "/storeNshare/");
+                if (!newDir.isDirectory())
                     newDir.mkdir();
 
                 // Output stream
                 OutputStream output = new FileOutputStream(Environment
                         .getExternalStorageDirectory().toString()
-                        + "/storeNshare/"+contentName);
+                        + "/storeNshare/" + contentName);
 
                 byte data[] = new byte[1024];
 
@@ -425,7 +411,7 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
 
         /**
          * Updating progress bar
-         * */
+         */
         protected void onProgressUpdate(String... progress) {
             // setting progress percentage
             pDialog.setProgress(Integer.parseInt(progress[0]));
@@ -433,7 +419,7 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
 
         /**
          * After completing background task Dismiss the progress dialog
-         * **/
+         **/
         @Override
         protected void onPostExecute(String file_url) {
             // dismiss the dialog after the file was downloaded
@@ -442,6 +428,7 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
         }
 
     }
+
     // Method to share either text or URL.
     private void shareTextUrl(String url) {
         Intent share = new Intent(Intent.ACTION_SEND);
@@ -451,7 +438,7 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
         // Add data to the intent, the receiving app will decide
         // what to do with it.
         share.putExtra(Intent.EXTRA_SUBJECT, "Image");
-        share.putExtra(Intent.EXTRA_TEXT, url+"");
+        share.putExtra(Intent.EXTRA_TEXT, url + "");
 
         startActivity(Intent.createChooser(share, "Share link!"));
     }
@@ -476,25 +463,29 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
 
         startActivity(Intent.createChooser(share, "Share Image!"));
     }
+
     @Override
     public void onBackPressed() {
-        if(mDrawerLayout.isDrawerOpen(GravityCompat.START))
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
             closeDrawer();
         else
             super.onBackPressed();
     }
-    private void closeDrawer(){
+
+    private void closeDrawer() {
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
-    private void setupToolbarMenu(){
-        mToolbar=(Toolbar)findViewById(R.id.toolbar);
+
+    private void setupToolbarMenu() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         //mToolbar.setTitle("Edit Profile");
     }
-    private void setupNavigationDrawerMenu(){
-        NavigationView navigationView=(NavigationView)findViewById(R.id.navigationView);
-        mDrawerLayout=(DrawerLayout)findViewById(R.id.drawerLayout);
-        ActionBarDrawerToggle drawerToggle=new ActionBarDrawerToggle(this,
-                mDrawerLayout,mToolbar,
+
+    private void setupNavigationDrawerMenu() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this,
+                mDrawerLayout, mToolbar,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(drawerToggle);
@@ -505,10 +496,11 @@ final String filePath="http://shareblood.x10host.com/storeshare/uploads/";
         name = headerLayout.findViewById(R.id.userName);
         email = headerLayout.findViewById(R.id.userEmail);
     }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        MyFunction mf=new MyFunction();
-        mf.navigationActions(getApplicationContext(),item,mGoogleSignInClient);
+        MyFunction mf = new MyFunction();
+        mf.navigationActions(ViewContentActivity.this, item, mGoogleSignInClient);
         closeDrawer();
         return true;
     }

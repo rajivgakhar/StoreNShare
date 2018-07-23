@@ -53,6 +53,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
 
 import Adapter.MyAdapter;
 import Model.ListItem;
@@ -91,7 +92,6 @@ public class UserProfileActivity extends AppCompatActivity
                     //no data present
                     return;
                 }
-
 
                 Uri selectedFileUri = data.getData();
                 selectedFilePath = FilePath.getPath(this, selectedFileUri);
@@ -151,7 +151,6 @@ public class UserProfileActivity extends AppCompatActivity
         String twoHyphens = "--";
         String boundary = "*****";
 
-
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
         int maxBufferSize = 1 * 1024 * 1024;
@@ -174,7 +173,6 @@ public class UserProfileActivity extends AppCompatActivity
             return 0;
         } else {
             try {
-
 
                 FileInputStream fileInputStream = new FileInputStream(selectedFile);
                 URL url = new URL(SERVER_URL);
@@ -225,14 +223,11 @@ public class UserProfileActivity extends AppCompatActivity
                 serverResponseCode = connection.getResponseCode();
                 String serverResponseMessage = connection.getResponseMessage();
 
-                Log.e(TAG, "Server Response is: " + serverResponseMessage + ": " + serverResponseCode);
-
                 //response code of 200 indicates the server status OK
                 if (serverResponseCode == 200) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            //tvFileName.setText("File Upload completed.\n\n You can see the uploaded file here: \n\n" + "http://coderefer.com/extras/uploads/"+ fileName);
                             Toast.makeText(UserProfileActivity.this, "File Upload completed", Toast.LENGTH_SHORT).show();
 
                             /***********save file into database start*/
@@ -257,12 +252,6 @@ public class UserProfileActivity extends AppCompatActivity
                                             for (int i = 0; i < ja.length(); i++) {
 
                                                 JSONObject jobj = ja.getJSONObject(i);
-                                                //HashMap<String, String> item = new HashMap<String, String>();
-                                                //  name.setText(jobj.getString("name"));
-                                                // email.setText(jobj.getString("email"));
-                                                // storeInfoSharedPref(jobj.getString("id"), jobj.getString("name"), jobj.getString("age"), jobj.getString("city"));
-
-                                                //  Toast.makeText(UserProfileActivity.this, jobj.getString("name")+"bgxx", Toast.LENGTH_SHORT).show();
 
                                             } // for loop ends
                                             MyFunction mf1 = new MyFunction();
@@ -406,10 +395,8 @@ public class UserProfileActivity extends AppCompatActivity
                         for (int i = 0; i < ja.length(); i++) {
 
                             JSONObject jobj = ja.getJSONObject(i);
-                            //HashMap<String, String> item = new HashMap<String, String>();
                             name.setText(jobj.getString("name"));
                             email.setText(jobj.getString("email"));
-                            // storeInfoSharedPref(jobj.getString("id"), jobj.getString("name"), jobj.getString("age"), jobj.getString("city"));
 
                         } // for loop ends
                         for (int i = 0; i < ja1.length(); i++) {
@@ -445,7 +432,6 @@ public class UserProfileActivity extends AppCompatActivity
             }
         });
 
-
         // Adding request to request queue
         MyApplication.getInstance().addToReqQueue(user_request);
     }
@@ -474,9 +460,6 @@ public class UserProfileActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -526,7 +509,7 @@ public class UserProfileActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         MyFunction mf=new MyFunction();
-        mf.navigationActions(getApplicationContext(),item,mGoogleSignInClient);
+        mf.navigationActions(UserProfileActivity.this,item,mGoogleSignInClient);
         closeDrawer();
         return true;
     }

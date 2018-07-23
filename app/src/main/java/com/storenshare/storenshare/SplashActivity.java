@@ -15,11 +15,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        /*
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-*/
 
         final ProgressBar splashProgreeBar=(ProgressBar)findViewById(R.id.splashProgressBar);
         splashProgreeBar.getProgressDrawable().setColorFilter(

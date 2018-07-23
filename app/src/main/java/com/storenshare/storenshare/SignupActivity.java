@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ public class SignupActivity extends AppCompatActivity {
     EditText email,pass,cpass;
     RadioButton rmale,rfemale;
     String gender="male";
+    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +35,12 @@ public class SignupActivity extends AppCompatActivity {
         cpass=(EditText)findViewById(R.id.etCPassword);
         rmale=(RadioButton)findViewById(R.id.rbMale);
         rfemale=(RadioButton)findViewById(R.id.rbFemale);
+        setupToolbarMenu();
     }
-
+    private void setupToolbarMenu() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("Create an Account!");
+    }
     public void signUp(View view) {
         final String emailid=email.getText().toString().trim();
         final String password=pass.getText().toString().trim();
@@ -71,33 +77,17 @@ public class SignupActivity extends AppCompatActivity {
                                 } else {
                                     Intent intent = new Intent(SignupActivity.this, UserProfileActivity.class);
                                     intent.putExtra("userId", response);
-                                    Toast.makeText(SignupActivity.this, "" + response, Toast.LENGTH_LONG).show();
                                     SharedPreferences sharedpreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
                                     editor.putString("userID", response);
                                     editor.commit();
+                                    MyFunction mf = new MyFunction();
+                                    mf.addLog(SignupActivity.this,response, "You created account.");
+
                                     startActivity(intent);
                                     // Signed in successfully, show authenticated UI.
-                                    Toast.makeText(SignupActivity.this, "SignIN SUccess", Toast.LENGTH_LONG).show();
-                                    // startActivity(new Intent(HomeActivity.this,ProfileActivity.class));
-                                    Log.e("rrrrrrrrrrrrr", response);
 
-                               /* Intent toLaunch = new Intent(getApplicationContext(),
-                                        LoginActivity.class);
-                                PendingIntent intentBack = PendingIntent.getActivity(
-                                        getApplicationContext(), 0, toLaunch, 0);
-                                NotificationCompat.Builder builder = new NotificationCompat.Builder(
-                                        getApplicationContext());
-                                builder.setTicker("Donor Registered");
-                                builder.setSmallIcon(android.R.drawable.stat_notify_more);
-                                builder.setWhen(System.currentTimeMillis());
-                                builder.setContentTitle("Donor Registered");
-                                builder.setContentText("You are registered successfully");
-                                builder.setContentIntent(intentBack);
-                                builder.setAutoCancel(true);
-                                Notification notify = builder.build();
-                                notifier.notify(GPS_NOTIFY, notify);*/
                                     finish();
                                 }
 
@@ -127,8 +117,7 @@ public class SignupActivity extends AppCompatActivity {
                 MyApplication.getInstance().addToReqQueue(postRequest);
 
             } catch (Exception ex) {
-                Toast.makeText(SignupActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("erorrrrrrrrrrrrrr", ex.getMessage());
+
             }
         }
     }

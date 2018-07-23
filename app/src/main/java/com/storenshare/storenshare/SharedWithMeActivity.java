@@ -106,9 +106,7 @@ public class SharedWithMeActivity extends AppCompatActivity implements Navigatio
                                 .show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(),
-                            e.getMessage(), Toast.LENGTH_SHORT)
-                            .show();
+
                 }
 
             }
@@ -156,7 +154,7 @@ public class SharedWithMeActivity extends AppCompatActivity implements Navigatio
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         MyFunction mf=new MyFunction();
-        mf.navigationActions(getApplicationContext(),item,mGoogleSignInClient);
+        mf.navigationActions(SharedWithMeActivity.this,item,mGoogleSignInClient);
         closeDrawer();
         return true;
     }

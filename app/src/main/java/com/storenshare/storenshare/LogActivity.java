@@ -98,15 +98,12 @@ public class LogActivity extends AppCompatActivity implements NavigationView.OnN
 
 
                     } else {
-
                         Toast.makeText(getApplicationContext(),
                                 "No log available", Toast.LENGTH_SHORT)
                                 .show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(),
-                            e.getMessage(), Toast.LENGTH_SHORT)
-                            .show();
+
                 }
 
             }
@@ -155,7 +152,7 @@ public class LogActivity extends AppCompatActivity implements NavigationView.OnN
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         MyFunction mf=new MyFunction();
-        mf.navigationActions(getApplicationContext(),item,mGoogleSignInClient);
+        mf.navigationActions(LogActivity.this,item,mGoogleSignInClient);
         closeDrawer();
         return true;
     }

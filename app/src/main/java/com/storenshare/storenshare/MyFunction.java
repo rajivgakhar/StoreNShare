@@ -1,5 +1,6 @@
 package com.storenshare.storenshare;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -99,13 +100,7 @@ public class MyFunction {
             public void onResponse(JSONObject response) {
                 try {
                     int success = response.getInt("success");
-                    if (success == 1) {
 
-                        Toast.makeText(context,"Log added",Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context,"Failed to add",Toast.LENGTH_SHORT).show();
-
-                    }
                 } catch (Exception e) {
                 }
             }
@@ -120,16 +115,16 @@ public class MyFunction {
 
     }
 
-    public void navigationActions(final Context context, MenuItem item, GoogleSignInClient mGoogleSignInClient){
+    public void navigationActions(final Activity context, MenuItem item, GoogleSignInClient mGoogleSignInClient){
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_home) {
+            context.startActivity(new Intent(context,UserProfileActivity.class));
+        } else if (id == R.id.nav_createDoc) {
             context.startActivity(new Intent(context,CreateDocsActivity.class));
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_shared) {
             context.startActivity(new Intent(context,SharedWithMeActivity.class));
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_EditProfile) {
             context.startActivity(new Intent(context, EditProfile.class));
         } else if (id == R.id.nav_share) {
 
@@ -137,9 +132,9 @@ public class MyFunction {
         else if (id == R.id.view_log) {
             context.startActivity(new Intent(context, LogActivity.class));
         }
-        else if (id == R.id.nav_send) {
+        else if (id == R.id.nav_signOut) {
             mGoogleSignInClient.signOut()
-                    .addOnCompleteListener((Executor) this, new OnCompleteListener<Void>() {
+                    .addOnCompleteListener( context, new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             // ...
@@ -149,9 +144,9 @@ public class MyFunction {
                             editor.remove("userID");
                             editor.commit();
 
-                            Toast.makeText(context, "Signout Success", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "You are log out", Toast.LENGTH_LONG).show();
                             context.startActivity(new Intent(context, HomeActivity.class));
-
+                            context.finish();
                         }
                     });
         }

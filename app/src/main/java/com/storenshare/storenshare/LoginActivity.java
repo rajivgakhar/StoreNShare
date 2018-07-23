@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,15 +24,19 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
     final String url = "http://shareblood.x10host.com/storeshare/login.php";
     EditText email, pass;
-
+    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         email = (EditText) findViewById(R.id.etEmail);
         pass = (EditText) findViewById(R.id.etPassword);
+        setupToolbarMenu();
     }
-
+    private void setupToolbarMenu() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("Login");
+    }
     public void login(View view) {
         String emailID = email.getText().toString().trim();
         String password = pass.getText().toString().trim();
@@ -61,6 +67,8 @@ public class LoginActivity extends AppCompatActivity {
                                 JSONObject jobj = ja.getJSONObject(i);
                                 editor.putString("userID", jobj.getString("id"));
                                 editor.commit();
+                                MyFunction mf = new MyFunction();
+                                mf.addLog(LoginActivity.this, jobj.getString("id"), "You are logged in.");
                                 Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
                                 intent.putExtra("userId", jobj.getString("id"));
                                 startActivity(intent);

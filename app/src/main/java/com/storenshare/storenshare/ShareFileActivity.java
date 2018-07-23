@@ -104,19 +104,11 @@ public class ShareFileActivity extends AppCompatActivity implements NavigationVi
                         if (success == 1) {
                             Intent in=new Intent(ShareFileActivity.this, ShareFileActivity.class);
                             in.putExtra("contentId",contentId);
-                            startActivity(in);
                             mf.addLog(ShareFileActivity.this, userId, "You shared a file ");
+                            startActivity(in);
 
                             finish();
-                           
-                            Toast.makeText(getApplicationContext(),
-                                    response.getString("message")+"", Toast.LENGTH_LONG)
-                                    .show();
-                        } else {
 
-                            Toast.makeText(getApplicationContext(),
-                                    response.getString("message")+"", Toast.LENGTH_LONG)
-                                    .show();
                         }
                     } catch (Exception e) {
                     }
@@ -154,19 +146,9 @@ public class ShareFileActivity extends AppCompatActivity implements NavigationVi
                         } // for loop ends
 
                         lvSharedUsers.setAdapter(new MyListAdapter(ShareFileActivity.this,members));
-                        Toast.makeText(getApplicationContext(),
-                                response.getString("message")+"", Toast.LENGTH_LONG)
-                                .show();
-                    } else {
 
-                        Toast.makeText(getApplicationContext(),
-                                response.getString("message")+"", Toast.LENGTH_LONG)
-                                .show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(),
-                            e.getMessage()+"", Toast.LENGTH_LONG)
-                            .show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -211,7 +193,7 @@ public class ShareFileActivity extends AppCompatActivity implements NavigationVi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         MyFunction mf=new MyFunction();
-        mf.navigationActions(getApplicationContext(),item,mGoogleSignInClient);
+        mf.navigationActions(ShareFileActivity.this,item,mGoogleSignInClient);
         closeDrawer();
         return true;
     }

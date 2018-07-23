@@ -34,13 +34,14 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditProfile extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class EditProfile extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     //TextView name,email,password;
     String userId;
     GoogleSignInClient mGoogleSignInClient;
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     TextView name, email;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +64,7 @@ public class EditProfile extends AppCompatActivity implements NavigationView.OnN
         final String url = "http://shareblood.x10host.com/storeshare/profile.php";
         final String UpdateUrl = "http://shareblood.x10host.com/storeshare/update.php";
         SharedPreferences sharedpreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        userId=sharedpreferences.getString("userID","1");
+        userId = sharedpreferences.getString("userID", "1");
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("userId", userId);
@@ -78,35 +79,26 @@ public class EditProfile extends AppCompatActivity implements NavigationView.OnN
                     if (success == 1) {
 
                         JSONArray ja = response.getJSONArray("users");
-                       // JSONArray ja1 = response.getJSONArray("content");
+                        // JSONArray ja1 = response.getJSONArray("content");
 
                         for (int i = 0; i < ja.length(); i++) {
 
                             JSONObject jobj = ja.getJSONObject(i);
-                            //HashMap<String, String> item = new HashMap<String, String>();
+
                             nameEt.setText(jobj.getString("name"));
                             emailEt.setText(jobj.getString("email"));
+
                             name.setText(jobj.getString("name"));
                             email.setText(jobj.getString("email"));
                             pass.setText(jobj.getString("password"));
                             phone.setText(jobj.getString("phone"));
-                            // storeInfoSharedPref(jobj.getString("id"), jobj.getString("name"), jobj.getString("age"), jobj.getString("city"));
-                            Toast.makeText(EditProfile.this, jobj.getString("name")+"bgxx", Toast.LENGTH_SHORT).show();
 
                         } // for loop ends
 
 
-                    } else {
-
-                        Toast.makeText(getApplicationContext(),
-                                "Invalid id", Toast.LENGTH_SHORT)
-                                .show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(),
-                            e.getMessage(), Toast.LENGTH_SHORT)
-                            .show();
-                    Log.e("testttttttt",e.getMessage());
+
                 }
 
             }
@@ -118,7 +110,6 @@ public class EditProfile extends AppCompatActivity implements NavigationView.OnN
             }
         });
 
-
         // Adding request to request queue
         MyApplication.getInstance().addToReqQueue(user_request);
 
@@ -126,9 +117,9 @@ public class EditProfile extends AppCompatActivity implements NavigationView.OnN
         updatebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String UserName= name.getText().toString();
-                String Password= pass.getText().toString();
-                String Phone= phone.getText().toString();
+                String UserName = nameEt.getText().toString();
+                String Password = pass.getText().toString();
+                String Phone = phone.getText().toString();
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("userId", userId);
@@ -144,36 +135,16 @@ public class EditProfile extends AppCompatActivity implements NavigationView.OnN
                         try {
                             int success = response.getInt("success");
 
-                          if (success == 1) {
+                            if (success == 1) {
+                                MyFunction mf = new MyFunction();
+                                mf.addLog(EditProfile.this, userId, "You updated your profile.");
 
-                               // JSONArray ja = response.getJSONArray("users");
-                                // JSONArray ja1 = response.getJSONArray("content");
-
-                               /* for (int i = 0; i < ja.length(); i++) {
-
-                                    JSONObject jobj = ja.getJSONObject(i);
-                                    //HashMap<String, String> item = new HashMap<String, String>();
-                                    name.setText(jobj.getString("name"));
-                                    email.setText(jobj.getString("email"));
-                                    pass.setText(jobj.getInt("password"));
-                                    phone.setText(jobj.getInt("phone"));
-                                    // storeInfoSharedPref(jobj.getString("id"), jobj.getString("name"), jobj.getString("age"), jobj.getString("city"));
-                                    Toast.makeText(EditProfile.this, jobj.getString("name")+"bgxx", Toast.LENGTH_SHORT).show();
-
-                                } */
-
-                                Toast.makeText(EditProfile.this,"updated",Toast.LENGTH_SHORT).show();
-                            } else {
-
-                                Toast.makeText(getApplicationContext(),
-                                        "Invalid id", Toast.LENGTH_SHORT)
-                                        .show();
+                                Toast.makeText(EditProfile.this, "Profile updated", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(EditProfile.this,UserProfileActivity.class));
+                                finish();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(),
-                                    e.getMessage(), Toast.LENGTH_SHORT)
-                                    .show();
-                            Log.e("testttttttt",e.getMessage());
+
                         }
 
                     }
@@ -184,33 +155,35 @@ public class EditProfile extends AppCompatActivity implements NavigationView.OnN
 
                     }
                 });
-
-
                 // Adding request to request queue
                 MyApplication.getInstance().addToReqQueue(user_request1);
 
             }
         });
     }
+
     @Override
     public void onBackPressed() {
-        if(mDrawerLayout.isDrawerOpen(GravityCompat.START))
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
             closeDrawer();
         else
             super.onBackPressed();
     }
-    private void closeDrawer(){
+
+    private void closeDrawer() {
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
-    private void setupToolbarMenu(){
-        mToolbar=(Toolbar)findViewById(R.id.toolbar);
+
+    private void setupToolbarMenu() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("Edit Profile");
     }
-    private void setupNavigationDrawerMenu(){
-        NavigationView navigationView=(NavigationView)findViewById(R.id.navigationView);
-        mDrawerLayout=(DrawerLayout)findViewById(R.id.drawerLayout);
-        ActionBarDrawerToggle drawerToggle=new ActionBarDrawerToggle(this,
-                mDrawerLayout,mToolbar,
+
+    private void setupNavigationDrawerMenu() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this,
+                mDrawerLayout, mToolbar,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(drawerToggle);
@@ -221,11 +194,12 @@ public class EditProfile extends AppCompatActivity implements NavigationView.OnN
         name = headerLayout.findViewById(R.id.userName);
         email = headerLayout.findViewById(R.id.userEmail);
     }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
-        MyFunction mf=new MyFunction();
-        mf.navigationActions(getApplicationContext(),item,mGoogleSignInClient);
+        MyFunction mf = new MyFunction();
+        mf.navigationActions(EditProfile.this, item, mGoogleSignInClient);
         closeDrawer();
         return true;
     }

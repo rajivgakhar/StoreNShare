@@ -193,7 +193,7 @@ String userId="1";
 
                                     @Override
                                     public void onErrorResponse(VolleyError response) {
-                                        Log.e("testttttttt1",response.getMessage());
+
                                     }
                                 });
 
@@ -203,17 +203,8 @@ String userId="1";
                                 //get content from data table END
                             }
 
-                        } else {
-
-                            Toast.makeText(getApplicationContext(),
-                                    "Invalid id", Toast.LENGTH_SHORT)
-                                    .show();
                         }
                     } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(),
-                                e.getMessage(), Toast.LENGTH_SHORT)
-                                .show();
-                        Log.e("testttttttt",e.getMessage());
                     }
 
                 }
@@ -224,12 +215,9 @@ String userId="1";
 
                 }
             });
-
-
             // Adding request to request queue
             MyApplication.getInstance().addToReqQueue(user_request1);
             //get content from data table END
-      //title.setText(contentName);
 
         }
 
@@ -268,7 +256,6 @@ String userId="1";
 
                 }
             }).start();
-
 
             Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
@@ -345,7 +332,6 @@ String userId="1";
                 dataOutputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
                 serverResponseCode = connection.getResponseCode();
                 String serverResponseMessage = connection.getResponseMessage();
-                Log.e("Server Response", "Server Response is: " + serverResponseMessage + ": " + serverResponseCode);
 
                 //response code of 200 indicates the server status OK
                 if (serverResponseCode == 200) {
@@ -374,16 +360,8 @@ String userId="1";
                                         if (success == 1) {
 
 
-                                        } else {
-
-                                            Toast.makeText(getApplicationContext(),
-                                                    "Invalid id", Toast.LENGTH_SHORT)
-                                                    .show();
                                         }
                                     } catch (Exception e) {
-                                        Toast.makeText(getApplicationContext(),
-                                                e.getMessage(), Toast.LENGTH_SHORT)
-                                                .show();
 
                                     }
 
@@ -406,7 +384,6 @@ String userId="1";
                 fileInputStream.close();
                 dataOutputStream.flush();
                 dataOutputStream.close();
-
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -461,7 +438,7 @@ String userId="1";
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         MyFunction mf=new MyFunction();
-        mf.navigationActions(getApplicationContext(),item,mGoogleSignInClient);
+        mf.navigationActions(CreateDocsActivity.this,item,mGoogleSignInClient);
         closeDrawer();
         return true;
     }

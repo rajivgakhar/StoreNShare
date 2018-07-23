@@ -338,7 +338,6 @@ String userId="1";
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(CreateDocsActivity.this, "File Upload completed", Toast.LENGTH_SHORT).show();
 
                             /***********save file into database start*/
 

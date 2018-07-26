@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/StoreNShare.iml" filepath="$PROJECT_DIR$/StoreNShare.iml" />
-      <module fileurl="file://C:\StoreNShare\StoreNShare.iml" filepath="C:\StoreNShare\StoreNShare.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\StoreNShare\app\app.iml" filepath="C:\StoreNShare\app\app.iml" />
     </modules>
   </component>
 </project>
